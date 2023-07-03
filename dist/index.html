@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Turing</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css" integrity="sha512-SgaqKKxJDQ/tAUAAXzvxZz33rmn7leYDYfBP+YoMRSENhf3zJyx3SBASt/OfeQwBHA1nxMis7mM3EV/oYT6Fdw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="css/app.css">
+    <script type="module" src="js/app.js"></script>
+</head>
+<body class="hide-editor">
+    <nav class="noselect">
+        <ul uk-tab="connect: #views .uk-switcher" style="margin: 0;">
+            <li class="uk-active"><a href="#">Graph</a></li>
+            <li><a href="#">Table</a></li>
+            <li><a href="#">Trace</a></li>
+        </ul>
+        <div class="grow"></div>
+        <div class="uk-button-group">
+            <button data-action="load" class="uk-button">Load</button>
+            <button data-action="save" class="uk-button">Save</button>
+            <button id="editor-toggle" class="uk-button">Edit</button>
+        </div>
+    </nav>
+    <main class="grow">
+        <div id="views" class="grow">
+            <ul class="uk-switcher">
+                <li id="graph-view"></li>
+                <li id="table-view"></li>
+                <li id="trace-view"></li>
+            </ul>
+        </div>
+        <div id="editor">
+            <div class="outer-container">
+                <div class="inner-container">
+                    <div class="highlights"></div>
+                    <textarea spellcheck="false"></textarea>
+                </div>
+            </div>
+            <div class="error-container"></div>
+        </div>
+    </main>
+    <footer>
+        <div id="tape">
+            <table cellpadding="0" cellspacing="0">
+                <tbody>
+                    <tr></tr>
+                </tbody>
+            </table>
+            <div class="head" contenteditable="true"></div>
+        </div>
+        <nav id="controls" class="noselect">
+            <div class="grow" style="text-align: left;">
+                <a href="#" data-action="left" class="uk-icon-link" title="Move head one cell to the left"><i class="fa-solid fa-arrow-left"></i></a>&nbsp;&nbsp;
+                <a href="#" data-action="home" class="uk-icon-link" title="Return head to initial position"><i class="fa-solid fa-home"></i></a>&nbsp;&nbsp;
+                <a href="#" data-action="right" class="uk-icon-link" title="Move head one cell to the right"><i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            <div class="grow" style="text-align: center;">
+
+            </div>
+            <div class="grow" style="text-align: center;">
+                <a href="#" data-action="backward" class="uk-icon-link" title="Step backward"><i class="fa-solid fa-backward-step"></i></a>&nbsp;&nbsp;
+                <a href="#" data-action="pause-resume" class="uk-icon-link" title="Pause/Resume execution"><i class="fa-solid fa-play"></i></a>&nbsp;&nbsp;
+                <a href="#" data-action="stop" class="uk-icon-link" title="Reset to initial state and clear trace"><i class="fa-solid fa-stop"></i></a>&nbsp;&nbsp;
+                <a href="#" data-action="forward" class="uk-icon-link" title="Step forward"><i class="fa-solid fa-forward-step"></i></a>
+            </div>
+            <div class="grow" style="text-align: center;">
+
+            </div>
+            <div class="grow" style="text-align: right;">
+                <a href="#" data-action="clear" class="uk-icon-link" title="Clear tape"><i class="fa-solid fa-eraser"></i></a>&nbsp;&nbsp;
+                <a href="#" data-action="reset" class="uk-icon-link" title="Reset to initial state, clear trace and tape and return head to initial position"><i class="fa-solid fa-arrow-rotate-left"></i></a>&nbsp;&nbsp;
+            </div>
+        </nav>
+    </footer>
+</body>
+</html>

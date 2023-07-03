@@ -1,0 +1,29 @@
+{
+  "name": "turing",
+  "version": "0.0.1",
+  "description": "Turing machine visualizer and analyzer",
+  "main": "src/index.mjs",
+  "type": "module",
+  "scripts": {
+    "serve": "serve dist",
+    "peg": "peggy --format es -o src/parser.mjs src/spec.pegjs",
+    "build-dev": "webpack --mode development",
+    "build": "webpack --mode production"
+  },
+  "author": "Fabio Massaioli",
+  "license": "MIT",
+  "devDependencies": {
+    "css-loader": "^6.8.1",
+    "peggy": "3.x",
+    "serve": "latest",
+    "style-loader": "^3.3.3",
+    "webpack": "^5.88.1",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "cldr-segmentation": "2.x",
+    "mustache": "^4.x",
+    "uikit": "3.x",
+    "vis-network": "9.x"
+  }
+}

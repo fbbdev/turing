@@ -1,0 +1,411 @@
+html {
+    height: 100vh;
+}
+
+body {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+
+    margin: 0;
+    padding: 10px;
+
+    box-sizing: border-box;
+    height: 100vh;
+}
+
+body > * {
+    margin-top: 10px;
+}
+
+body > *:first-child {
+    margin-top: 0;
+}
+
+textarea {
+  resize: none;
+}
+
+textarea:focus {
+    outline: none;
+}
+
+.grow {
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+}
+
+body > nav, body > main {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: stretch;
+}
+
+body > footer {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+}
+
+body > nav > .uk-tab::before {
+    border: none;
+}
+
+.uk-notification, .uk-notification * {
+    font-size: 1em;
+}
+
+#views {
+    position: relative;
+
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+}
+
+#views .uk-switcher {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    margin: 0;
+    padding: 0;
+
+    overflow: auto;
+}
+
+#graph-view {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+}
+
+#table-view th.annotation {
+    text-align: right;
+}
+
+#table-view th.symbol, #table-view th.state, #table-view td, #tape {
+    font-family: 'Consolas', 'Monaco', 'Courier', 'Courier New', monospace;
+    font-size: 1em;
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+
+    color: #666;
+
+    white-space: pre;
+    word-wrap: normal;
+    overflow-wrap: normal;
+}
+
+#table-view th.active, #table-view td.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+#editor {
+    position: relative;
+
+    margin: 0;
+    margin-left: 10px;
+    padding: 0;
+
+    width: 33%;
+
+    overflow: hidden;
+
+    border: 1px solid lightgray;
+    border-radius: 3px;
+
+    transition: width .5s, margin .5s, border-width .5s step-start;
+}
+
+#editor.hide-editor {
+    margin-left: 0;
+    width: 0%;
+    border-width: 0;
+
+    transition: width .5s, margin .5s, border-width .45s step-end;
+}
+
+#editor .outer-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    margin: 0;
+    padding: 4px;
+
+    overflow: auto;
+}
+
+#editor.show-error .outer-container {
+    bottom: 30px;
+}
+
+#editor .error-container {
+    display: none;
+
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    margin: 0;
+    padding: 0 4px;
+
+    box-sizing: border-box;
+    height: 30px;
+    line-height: 30px;
+
+    background: #f99;
+    color: #000;
+
+    overflow: hidden;
+}
+
+#editor.show-error .error-container {
+    display: block;
+}
+
+#editor .inner-container {
+    position: relative;
+
+    min-width: 100%;
+    min-height: 100%;
+
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
+
+    overflow: visible;
+}
+
+#editor .highlights, #editor textarea {
+    font-family: 'Consolas', 'Monaco', 'Courier', 'Courier New', monospace;
+    font-size: 11pt;
+    line-height: normal;
+
+    white-space: pre;
+    word-wrap: normal;
+    overflow-wrap: normal;
+}
+
+#editor .highlights {
+    margin: 0;
+    padding: 0;
+
+    background: transparent;
+    color: transparent;
+
+    overflow: visible;
+}
+
+#editor textarea {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+
+    border: none;
+    border-radius: 0;
+
+    background: transparent;
+    color: #000;
+}
+
+#editor .highlights .err {
+    border-radius: 3px;
+    background-color: #f99;
+}
+
+#editor-toggle:not(.hide-editor) {
+    background: #1e87f0;
+    color: #fff;
+}
+
+#editor-toggle:not(.hide-editor):hover {
+    background: #0f7ae5;
+}
+
+#tape {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+
+    position: relative;
+
+    margin: 0;
+    padding: 3px 0;
+
+    overflow: hidden;
+
+    text-align: center;
+}
+
+#tape::after, #tape::before {
+    content: ' ';
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 100;
+
+    width: 32px;
+
+    background: rgb(255,255,255);
+
+    pointer-events: none;
+}
+
+#tape::before {
+    left: 0;
+    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+}
+
+#tape::after {
+    right: 0;
+    background: linear-gradient(270deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+}
+
+#tape table {
+    position: relative;
+    border: none;
+
+    margin: 0;
+    padding: 0;
+
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+#tape.step-left table {
+    animation: .25s linear 0s 1 normal forwards running tape-step-left;
+}
+
+#tape.step-right table {
+    animation: .25s linear 0s 1 normal forwards running tape-step-right;
+}
+
+@keyframes tape-step-left {
+    from {
+        left: 0;
+    }
+
+    to {
+        left: 33px;
+    }
+}
+
+@keyframes tape-step-right {
+    from {
+        left: 0;
+    }
+
+    to {
+        left: -33px;
+    }
+}
+
+#tape .head {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    bottom: 0;
+    z-index: 100;
+
+    margin: 0;
+    margin-left: -20px;
+    padding: 0;
+
+    width: 34px;
+
+    line-height: 34px;
+
+    border: 3px solid #000;
+    background: transparent;
+
+    color: transparent;
+    caret-color: transparent;
+
+    cursor: text;
+}
+
+#tape .head:hover:not(:focus) {
+    background: rgba(145, 213, 255, 0.5);
+}
+
+#tape .head:focus {
+    outline: none;
+    animation: head-blink 1.2s step-start infinite;
+}
+
+@keyframes head-blink {
+    50% {
+        background: rgba(145, 213, 255, 0.5);
+    }
+}
+
+#tape td {
+    margin: 0;
+    padding: 0;
+    border: 1px solid #000;
+}
+
+#tape td span {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+}
+
+#controls {
+    display: flex;
+    flex-flow: row wrap;
+
+    justify-content: center;
+
+    margin: 0;
+    margin-top: 10px;
+    padding: 0;
+}
+
+#controls > div {
+    white-space: nowrap;
+    word-break: keep-all;
+    min-width: min-content;
+}
+
+#controls i {
+    font-size: 24px;
+    pointer-events: none;
+}
