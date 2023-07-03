@@ -2,7 +2,7 @@ name: Run webpack and deploy to GitHub Pages
 
 on:
   push:
-    branches: [ $default-branch ]
+    branches: [ "main" ]
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
@@ -37,7 +37,7 @@ jobs:
       run: |
         npm ci
         npm run build
-        
+
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v1
       with:
