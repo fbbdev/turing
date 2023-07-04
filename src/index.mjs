@@ -255,12 +255,15 @@ class App {
 
         const mark = document.createElement('span');
         mark.classList.add('err');
-        mark.innerText = length > 0 ? this.editorTextArea.value.slice(start, end) : " ";
+
+        let markContent = this.editorTextArea.value.slice(start, end);
+        if (markContent.length === 0 || markContent.startsWith("\n"))
+            markContent = " " + markContent;
+
+        mark.innerText = markContent;
         this.editorHighlights.appendChild(mark);
 
-        const rest = document.createElement('span');
-        rest.innerText = this.editorTextArea.value.slice(end) + " ";
-        this.editorHighlights.appendChild(rest);
+        this.editorHighlights.append(this.editorTextArea.value.slice(end) + " ");
     }
 
     read(index) {
@@ -602,6 +605,8 @@ class App {
         this.edges.update(changedEdges);
 
         this.updateGraphStyle(null, null);
+
+        this.graph.fit();
     }
 
     updateGraphStyle(prevState, prevTransition) {
@@ -814,6 +819,9 @@ class App {
             case "forward":
                 this.stepForward();
                 break;
+
+            case "pause-resume":
+                break;
         }
     }
 
@@ -997,6 +1005,7 @@ class App {
         this.editorTextArea = this.editor.querySelector('textarea');
 
         this.editorTextArea.oninput = ev => {
+            this.editor.classList.remove('show-error');
             this.editorHighlights.innerText = this.editorTextArea.value + " ";
             this.queueUpdate();
         };
@@ -1097,6 +1106,7 @@ class App {
                 case "ArrowRight":
                     this.move(R);
                     break;
+                case "Enter":
                 case "Home":
                     if (this.head === 0)
                         return;
