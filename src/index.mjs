@@ -215,6 +215,17 @@ const TABLE =
 
 Mustache.parse(TABLE);
 
+const TRACE_EMPTY = `<tr class="empty"><td colspan="6">No steps performed</td></tr>`;
+const TRACE_ROW =
+    `<td class="uk-table-shrink number"></td>
+    <td class="uk-table-shrink">{{state}}</td>
+    <td class="uk-table-shrink ctr">{{read}}</td>
+    <td class="uk-table-shrink ctr">{{write}}</td>
+    <td class="uk-table-shrink ctr">{{move}}</td>
+    <td>{{next}}</td>`;
+
+Mustache.parse(TRACE_ROW);
+
 const LOOP = {
     arrowStrikethrough: true,
     smooth: {
@@ -242,7 +253,7 @@ class App {
 
         this.trace = [];
 
-        this.steppingDelay = 500;
+        this.steppingDelay = 250;
         this.steppingInterval = null;
     }
 
@@ -348,7 +359,7 @@ class App {
             return;
         }
 
-        this.trace.push(step);
+        this.pushToTrace(step);
 
         const prevTransition = step;
         const headCellIndex = this.head - this.tapeCellBase;
@@ -364,7 +375,7 @@ class App {
             return;
 
         const prevTransition = this.nextStep;
-        const lastStep = this.trace.pop();
+        const lastStep = this.popFromTrace();
 
         this.move(-lastStep.move);
         const headCellIndex = this.head - this.tapeCellBase;
@@ -410,7 +421,7 @@ class App {
 
         this.spec = spec;
         this.transitionMatrix = tm;
-        this.trace = [];
+        this.clearTrace();
 
         if (prevBlank && prevBlank !== spec.blank) {
             // update tape
@@ -707,6 +718,39 @@ class App {
         this.edges.update(changedEdges);
     }
 
+    pushToTrace(step) {
+        this.trace.push(step);
+
+        if (this.trace.length === 1)
+            this.traceTable.innerHTML = "";
+
+        const row = document.createElement('tr');
+        row.innerHTML = Mustache.render(TRACE_ROW, {
+            __proto__: step,
+            move: MOVE_NAME[step.move]
+        });
+        this.traceTable.appendChild(row);
+
+        if (this.traceView.matches('.uk-active'))
+            row.scrollIntoView(false);
+    }
+
+    popFromTrace() {
+        const step = this.trace.pop();
+
+        if (this.trace.length <= 0)
+            this.traceTable.innerHTML = TRACE_EMPTY;
+        else
+            this.traceTable.removeChild(this.traceTable.lastChild);
+
+        return step;
+    }
+
+    clearTrace() {
+        this.trace = [];
+        this.traceTable.innerHTML = TRACE_EMPTY;
+    }
+
     updateTape(resize = false) {
         const tapeCellCount = Math.max(5, 1 + 2*(Math.floor(((this.tape.clientWidth/2) - 16)/32) + 2));
 
@@ -825,7 +869,7 @@ class App {
 
             case "reset":
             case "stop":
-                this.trace = [];
+                this.clearTrace();
                 this.changeState(this.spec.init);
 
                 if (action === "stop")
@@ -893,8 +937,11 @@ class App {
                 this.resume();
         };
 
+        this.steppingDelaySelector.dispatchEvent('change');
+
         this.graphView = document.getElementById('graph-view');
         this.tableView = document.getElementById('table-view');
+        this.traceView = document.getElementById('trace-view');
 
         this.nodes = new DataSet([]);
         this.edges = new DataSet([]);
@@ -1037,7 +1084,7 @@ class App {
         });
 
         this.graph.on('doubleClick', ev => {
-            this.trace = [];
+            this.clearTrace();
             this.changeState(ev.nodes[0] === 'init' ? this.spec.init : ev.nodes[0]);
         });
 
@@ -1052,6 +1099,8 @@ class App {
 
             this.changeState(stateCell.dataset.state);
         }
+
+        this.traceTable = this.traceView.querySelector('tbody');
 
         this.editor = document.getElementById('editor');
         this.editorErrorContainer = this.editor.querySelector('.error-container');

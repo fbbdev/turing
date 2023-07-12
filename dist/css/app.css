@@ -104,7 +104,7 @@ body > nav > .uk-tab::before {
     text-align: right;
 }
 
-#table-view th.symbol, #table-view th.state, #table-view td, #tape {
+#table-view th.symbol, #table-view th.state, #table-view td, #trace-view td, #tape {
     font-family: 'Consolas', 'Monaco', 'Courier', 'Courier New', monospace;
     font-size: 1em;
     font-weight: normal;
@@ -122,6 +122,27 @@ body > nav > .uk-tab::before {
 #table-view th.active, #table-view td.active {
     font-weight: bold;
     text-decoration: underline;
+}
+
+#trace-view .ctr {
+    text-align: center;
+}
+
+#trace-view tbody tr {
+    counter-increment: trace-step-number;
+}
+
+#trace-view tr.empty td {
+    text-align: center;
+    color: #888;
+}
+
+#trace-view td.number {
+    text-align: right;
+}
+
+#trace-view td.number::after {
+    content: counter(trace-step-number);
 }
 
 #editor {
