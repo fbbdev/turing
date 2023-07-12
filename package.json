@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "cldr-segmentation": "2.x",
+    "file-saver": "^2.0.5",
     "mustache": "^4.x",
     "uikit": "3.x",
     "vis-network": "9.x"

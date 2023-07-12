@@ -1,4 +1,5 @@
 import CLDR from "cldr-segmentation";
+import * as FileSaver from "file-saver";
 import Mustache from "mustache";
 import { DataSet } from "vis-data";
 import { Network } from "vis-network";
@@ -9,7 +10,6 @@ import UIkitIcons from "uikit/dist/js/uikit-icons";
 UIkit.use(UIkitIcons);
 
 import * as parser from "./parser.mjs";
-import * as FileSaver from "./FileSaver.mjs";
 
 /**
  * Select file(s).
@@ -215,7 +215,7 @@ const TABLE =
 
 Mustache.parse(TABLE);
 
-const TRACE_EMPTY = `<tr class="empty"><td colspan="6">No steps performed</td></tr>`;
+const TRACE_EMPTY = `<tr class="empty"><td colspan="6">The trace is empty.</td></tr>`;
 const TRACE_ROW =
     `<td class="uk-table-shrink number"></td>
     <td class="uk-table-shrink">{{state}}</td>
@@ -937,7 +937,7 @@ class App {
                 this.resume();
         };
 
-        this.steppingDelaySelector.dispatchEvent('change');
+        this.steppingDelaySelector.dispatchEvent(new Event('change'));
 
         this.graphView = document.getElementById('graph-view');
         this.tableView = document.getElementById('table-view');
