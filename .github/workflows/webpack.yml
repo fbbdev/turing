@@ -1,4 +1,4 @@
-name: Run webpack and deploy to GitHub Pages
+name: Build and deploy
 
 on:
   push:
