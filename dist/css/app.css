@@ -141,7 +141,7 @@ body > nav > .uk-tab::before {
     transition: width .5s, margin .5s, border-width .5s step-start;
 }
 
-#editor.hide-editor {
+body.hide-editor #editor {
     margin-left: 0;
     width: 0%;
     border-width: 0;
@@ -248,12 +248,12 @@ body > nav > .uk-tab::before {
     background-color: #f99;
 }
 
-#editor-toggle:not(.hide-editor) {
+body:not(.hide-editor) .uk-button[data-action='edit'] {
     background: #1e87f0;
     color: #fff;
 }
 
-#editor-toggle:not(.hide-editor):hover {
+body:not(.hide-editor) .uk-button[data-action='edit']:hover {
     background: #0f7ae5;
 }
 
@@ -408,4 +408,43 @@ body > nav > .uk-tab::before {
 #controls i {
     font-size: 24px;
     pointer-events: none;
+}
+
+#controls select {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0 5px;
+    height: 100%;
+
+    vertical-align: top;
+
+    -moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+
+    border: none;
+    background: #f0f0f0;
+
+    color: #666;
+    text-align: center;
+    text-transform: uppercase;
+
+    transition: .1s ease-in-out;
+    transition-property: background-color;
+}
+
+#controls select:hover {
+    background: rgb(208, 208, 215);
+}
+
+#controls .fa-pause {
+    display: none;
+}
+
+body.running #controls .fa-pause {
+    display: initial;
+}
+
+body.running #controls .fa-play {
+    display: none;
 }

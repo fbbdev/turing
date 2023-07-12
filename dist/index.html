@@ -10,12 +10,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="css/app.css">
-    <script type="module" src="js/app.js"></script>
+    <script type="module" async src="js/app.js"></script>
 </head>
-<body class="hide-editor">
+<body>
     <nav class="noselect">
         <ul uk-tab="connect: #views .uk-switcher" style="margin: 0;">
-            <li class="uk-active"><a href="#">Graph</a></li>
+            <li class="uk-active"><a href="#">Diagram</a></li>
             <li><a href="#">Table</a></li>
             <li><a href="#">Trace</a></li>
         </ul>
@@ -23,7 +23,7 @@
         <div class="uk-button-group">
             <button data-action="load" class="uk-button">Load</button>
             <button data-action="save" class="uk-button">Save</button>
-            <button id="editor-toggle" class="uk-button">Edit</button>
+            <button data-action="edit" class="uk-button">Edit</button>
         </div>
     </nav>
     <main class="grow">
@@ -64,7 +64,7 @@
             </div>
             <div class="grow" style="text-align: center;">
                 <a href="#" data-action="backward" class="uk-icon-link" title="Step backward"><i class="fa-solid fa-backward-step"></i></a>&nbsp;&nbsp;
-                <a href="#" data-action="pause-resume" class="uk-icon-link" title="Pause/Resume execution"><i class="fa-solid fa-play"></i></a>&nbsp;&nbsp;
+                <a href="#" data-action="pause-resume" class="uk-icon-link" title="Pause/Resume execution"><i class="fa-solid fa-play"></i><i class="fa-solid fa-pause"></i></a>&nbsp;&nbsp;
                 <a href="#" data-action="stop" class="uk-icon-link" title="Reset to initial state and clear trace"><i class="fa-solid fa-stop"></i></a>&nbsp;&nbsp;
                 <a href="#" data-action="forward" class="uk-icon-link" title="Step forward"><i class="fa-solid fa-forward-step"></i></a>
             </div>
@@ -72,6 +72,14 @@
 
             </div>
             <div class="grow" style="text-align: right;">
+                <select id="stepping-delay" title="Step every">
+                    <option value="0">None</option>
+                    <option value="10">10 ms</option>
+                    <option value="50">50 ms</option>
+                    <option value="250">250 ms</option>
+                    <option value="500" selected>500 ms</option>
+                    <option value="1000">1 s</option>
+                </select>&nbsp;&nbsp;
                 <a href="#" data-action="clear" class="uk-icon-link" title="Clear tape"><i class="fa-solid fa-eraser"></i></a>&nbsp;&nbsp;
                 <a href="#" data-action="reset" class="uk-icon-link" title="Reset to initial state, clear trace and tape and return head to initial position"><i class="fa-solid fa-arrow-rotate-left"></i></a>&nbsp;&nbsp;
             </div>

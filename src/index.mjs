@@ -233,10 +233,17 @@ class App {
 
         this.transitionMatrix = {};
         this.state = null;
+
         this.head = 0;
+        this.leftmost = 0;
+        this.rightmost = 0;
         this.tapeLeft = [];
         this.tapeRight = [];
+
         this.trace = [];
+
+        this.steppingDelay = 500;
+        this.steppingInterval = null;
     }
 
     reportError(message, location) {
@@ -332,8 +339,14 @@ class App {
     stepForward() {
         const step = this.nextStep;
 
-        if (!step)
+        if (!step) {
+            if (this.running) {
+                this.pause();
+                UIkit.notification("The machine has halted");
+            }
+
             return;
+        }
 
         this.trace.push(step);
 
@@ -361,6 +374,22 @@ class App {
         this.changeState(lastStep.state, prevTransition);
     }
 
+    get running() {
+        return this.steppingInterval !== null;
+    }
+
+    pause() {
+        clearInterval(this.steppingInterval);
+        this.steppingInterval = null;
+        document.body.classList.remove('running');
+    }
+
+    resume() {
+        clearInterval(this.steppingInterval);
+        this.steppingInterval = setInterval(() => this.stepForward(), this.steppingDelay);
+        document.body.classList.add('running');
+    }
+
     update() {
         let spec = null, tm = null;
 
@@ -375,8 +404,7 @@ class App {
         this.editorErrorContainer.innerHTML = "";
         this.editor.classList.remove('show-error');
 
-        console.log(spec);
-        console.log(tm);
+        this.pause();
 
         const prevBlank = this.spec?.blank;
 
@@ -763,12 +791,17 @@ class App {
 
                     this.update();
                 }
-                break;
+                return;
 
             case "save":
                 const blob = new Blob([this.editorTextArea.value], {type: "text/plain;charset=utf-8"});
                 FileSaver.saveAs(blob, "TuringMachineSpec.txt");
-                break;
+                return;
+
+            case "edit":
+                document.body.classList.toggle('hide-editor');
+                this.editorTextArea.disabled = !this.editorTextArea.disabled;
+                return;
 
             case "left":
                 this.move(L);
@@ -776,10 +809,18 @@ class App {
                 this.updateGraphStyle(this.state, prevTransition);
                 break;
 
-                case "right":
+            case "right":
                 this.move(R);
                 this.updateTableStyle();
                 this.updateGraphStyle(this.state, prevTransition);
+                break;
+
+            case "pause-resume":
+                if (!this.running) {
+                    this.resume();
+                    return;
+                }
+
                 break;
 
             case "reset":
@@ -820,9 +861,11 @@ class App {
                 this.stepForward();
                 break;
 
-            case "pause-resume":
-                break;
+            default:
+                return;
         }
+
+        this.pause();
     }
 
     start() {
@@ -837,6 +880,17 @@ class App {
                 ev.preventDefault();
                 this.perform(ev.target.dataset.action);
             }
+        };
+
+        this.steppingDelaySelector = document.getElementById('stepping-delay');
+        this.steppingDelaySelector.onchange = () => {
+            const newDelay = parseInt(this.steppingDelaySelector.value);
+            if (isNaN(newDelay))
+                return;
+
+            this.steppingDelay = newDelay;
+            if (this.running)
+                this.resume();
         };
 
         this.graphView = document.getElementById('graph-view');
@@ -1008,16 +1062,6 @@ class App {
             this.editor.classList.remove('show-error');
             this.editorHighlights.innerText = this.editorTextArea.value + " ";
             this.queueUpdate();
-        };
-
-        document.getElementById('editor-toggle').onclick = ev => {
-            ev.stopPropagation();
-            ev.preventDefault();
-
-            for (const el of document.querySelectorAll('#editor, #editor-toggle'))
-                el.classList.toggle('hide-editor');
-
-            this.editorTextArea.disabled = !this.editorTextArea.disabled;
         };
 
         this.tape = document.getElementById('tape')
