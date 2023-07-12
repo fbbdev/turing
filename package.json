@@ -11,7 +11,7 @@
     "build": "webpack --mode production"
   },
   "author": "Fabio Massaioli",
-  "license": "MIT",
+  "license": "GPL-3.0-or-later",
   "devDependencies": {
     "css-loader": "^6.8.1",
     "peggy": "3.x",
