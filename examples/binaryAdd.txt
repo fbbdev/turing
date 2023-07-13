@@ -1,0 +1,60 @@
+init test
+blank *
+
+test 0 0 R skipO1
+test 1 1 R skipO1
+test * * R halt
+
+skipO1 z z R skipO1
+skipO1 o o R skipO1
+skipO1 0 0 R skipO1
+skipO1 1 1 R skipO1
+skipO1 * * R getO2
+
+getO2 * * L rewrite
+getO2 0 0 R getO2_0
+getO2 1 1 R getO2_1
+
+getO2_0 0 0 R getO2_0
+getO2_0 1 1 R getO2_1
+getO2_0 * * L biteO2_0
+
+getO2_1 0 0 R getO2_0
+getO2_1 1 1 R getO2_1
+getO2_1 * * L biteO2_1
+
+biteO2_0 0 * L rskipO2_0
+
+biteO2_1 1 * L rskipO2_1
+
+rskipO2_0 0 0 L rskipO2_0
+rskipO2_0 1 1 L rskipO2_0
+rskipO2_0 * * L add_0
+
+add_0 z z L add_0
+add_0 o o L add_0
+add_0 0 z R skipO1
+add_0 1 o R skipO1
+add_0 * z R skipO1
+
+rskipO2_1 0 0 L rskipO2_1
+rskipO2_1 1 1 L rskipO2_1
+rskipO2_1 * * L add_1
+
+add_1 z z L add_1
+add_1 o o L add_1
+add_1 0 o R skipO1
+add_1 1 z L incr
+add_1 * o R skipO1
+
+incr 1 0 L incr
+incr 0 1 R skipO1
+incr * 1 R skipO1
+
+rewrite * * L rewrite'
+
+rewrite' z 0 L rewrite'
+rewrite' o 1 L rewrite'
+rewrite' 0 0 L rewrite'
+rewrite' 1 1 L rewrite'
+rewrite' * * R halt

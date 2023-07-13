@@ -1233,7 +1233,7 @@ class App {
             this.updateGraphStyle(this.state, prevTransition);
         };
 
-        const init = () => {
+        const init = async () => {
             const prev = this.editorTextArea.value;
 
             this.editorTextArea.value = "init halt\nblank *\n";
@@ -1249,6 +1249,25 @@ class App {
 
             this.tapeResizeObserver = new ResizeObserver(() => this.updateTape(true));
             this.tapeResizeObserver.observe(this.tape);
+
+            const params = new URLSearchParams(window.location.search);
+            if (!params.has('fetch'))
+                return;
+
+            try {
+                const response = await fetch(params.get('fetch'));
+                if (!response.ok) {
+                    UIkit.notification('Could not load example', 'warning');
+                    return;
+                }
+
+                this.state = null;
+                this.editorTextArea.value = await response.text();
+                this.editorHighlights.innerText = this.editorTextArea.value + " ";
+                this.update();
+            } catch (err) {
+                UIkit.notification('Could not load example', 'warning');
+            }
         }
 
         if (document.readyState === 'complete') {

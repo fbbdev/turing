@@ -1,0 +1,19 @@
+init test
+blank *
+
+test 1 * R skipOrigR
+test * * R halt
+
+skipOrigR 1 1 R skipOrigR
+skipOrigR * * R skipCopyR
+
+skipCopyR 1 1 R skipCopyR
+skipCopyR * 1 R write1
+
+write1 * 1 L skipCopyL
+
+skipCopyL 1 1 L skipCopyL
+skipCopyL * * L skipOrigL
+
+skipOrigL 1 1 L skipOrigL
+skipOrigL * * R test
