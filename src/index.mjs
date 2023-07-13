@@ -897,6 +897,7 @@ class App {
 
                 // fallthrough
             case "home":
+                this.endTapeMove();
                 this.head = 0;
 
                 if (action === "home") {
@@ -1209,7 +1210,9 @@ class App {
                 case "Delete":
                     this.headSymbol = this.spec.blank;
                     this.tapeRow.children.item(headCellIndex).firstChild.innerText = this.spec.blank;
-                    this.move((ev.key === "Backspace") ? L : R);
+
+                    if (ev.key === "Backspace")
+                        this.move(L);
                     break;
                 case "ArrowLeft":
                     this.move(L);
@@ -1222,6 +1225,7 @@ class App {
                     if (this.head === 0)
                         return;
 
+                    this.endTapeMove();
                     this.head = 0;
                     this.updateTape();
                     break;
