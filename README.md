@@ -12,38 +12,74 @@ itself.
 This project is an attempt at developing tools that may help solve both sides
 of the problem; first, by providing a graphical environment in which the
 structure and behavior of machine designs can be visualized and explored
-intuitively; second, by providing tools for assisted (and eventually automated)
+intuitively; second, by providing tools for assisted (and partially automated)
 analysis of their behavior in terms of a higher level description language.
 
 It grew out of dissatisfaction with the tools already available on the internet,
 which are either too inflexible (i.e. limited in their functionality) or sport
 outdated and/or uncomfortable user interfaces.
 
-## Web demo
+## Try it
 
-This is a web-based application. A demo is available
+This is a browser-based application. A fully functional build is available
 [here](https://fbbdev.it/turing/).
 For a guide to the [description language](#description-language) and some
 [examples](#examples), see below.
 
-Here is a screenshot of the main view (state diagram):
+Here is a screenshot of the main view, showing the state diagram of a machine
+on the left and its low level textual description on the right:
 
 ![A screenshot of the diagram view](screenshot.png)
 
+## Building
+
+In order to build the application yourself, clone the repository and run
+```
+$ npm install
+```
+Then run
+```
+$ npm run build
+```
+for the production mode build (optimized and minified), or
+```
+$ npm run build-dev
+```
+for the development build. Finally, run
+```
+$ npm run serve
+```
+to start a minimal webserver hosting the application. The build scripts invoke
+webpack under the hood.
+
+If you update the grammar of the description language
+([`src/spec.pegjs`](src/spec.pegjs)), you must run
+[peggy](https://peggyjs.org/) to regenerate the javascript parser code. The
+following command
+```
+$ npm run peg
+```
+invokes the peggy binary with the right options.
+
 ## Roadmap
 
-At present, only the first part of the project is almost fully developed and
-already quite usable. It takes as input a low level textual description of a
-Turing machine and provides an interactive visualization of the state
-transition diagram and table, together with a tape editor and navigator and
-tools for running the program. There is still room for improvement, for example
-by adding a suite of keyboard shortcuts, graphical editing tools and code
-navigation utilities.
+At present, only the first part of the project is developed and already quite
+usable. It takes as input a low level textual description of a Turing machine
+and provides an interactive visualization of the state transition diagram and
+table, together with a tape editor and navigator and tools for running the
+program. There is still room for improvement, for example by adding a suite of
+keyboard shortcuts, graphical editing tools and code navigation utilities.
 
-Eventually, a high-level description language will be implemented together with
-tools for reverse-engineering a high-level description from a low-level one.
-Ideally, when a high-level description is available the application should be
-able to extract hints for an improved visualization.
+Eventually, a high-level description language (with composable blocks and
+structured control flow) will be implemented together with tools for
+reverse-engineering a high-level description from a low-level one. Ideally,
+once a high-level description is available, the application should be able to
+extract hints from it for an improved visualization.
+
+A Turing machine program is essentially a set of labeled code blocks each
+comprising exactly a load, a branch on the loaded value, a store, a pointer
+update and a jump. The idea is to apply well-known decompilation techniques
+to recover structured flow control constructs from the transition graph.
 
 **TODO:** detailed roadmap.
 
