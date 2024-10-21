@@ -1255,6 +1255,14 @@ class App {
             this.tapeResizeObserver.observe(this.tape);
 
             const params = new URLSearchParams(window.location.search);
+            if (params.has('view')) {
+                try {
+                    UIkit.tab(document.querySelector('body > nav > *[uk-tab]')).show(parseInt(params.get('view')));
+                } catch (_) {
+                    // Discard parseInt exception
+                }
+            }
+
             if (!params.has('fetch'))
                 return;
 

@@ -22,7 +22,7 @@ outdated and/or uncomfortable user interfaces.
 ## Try it
 
 This is a browser-based application. A fully functional build is available
-[here](https://fbbdev.it/turing/).
+[here](https://fbbdev.it/turing/?view=3).
 For a guide to the [description language](#description-language) and some
 [examples](#examples), see below.
 

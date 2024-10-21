@@ -145,6 +145,15 @@ body > nav > .uk-tab::before {
     content: counter(trace-step-number);
 }
 
+#examples-view {
+    padding: 30px;
+}
+
+#examples-view .uk-accordion-title {
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
 #editor {
     position: relative;
 

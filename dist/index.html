@@ -18,6 +18,7 @@
             <li class="uk-active"><a href="#">Diagram</a></li>
             <li><a href="#">Table</a></li>
             <li><a href="#">Trace</a></li>
+            <li><a href="#">Examples</a></li>
         </ul>
         <div class="grow"></div>
         <div class="uk-button-group">
@@ -45,6 +46,35 @@
                         </thead>
                         <tbody></tbody>
                     </table>
+                </li>
+                <li id="examples-view">
+                    <ul uk-accordion>
+                        <li>
+                            <a class="uk-accordion-title" href>Unary multiplication by 2</a>
+                            <div class="uk-accordion-content">
+                                <p>A machine that reads from the tape an integer in unary notation (n is represented by a list of n occurrences of the symbol 1) and writes it back doubled.</p>
+                                <p><a href="?fetch=https%3A%2F%2Fraw.githubusercontent.com%2Ffbbdev%2Fturing%2Fmain%2Fexamples%2FunaryDup.txt">Load in the simulator</a></p>
+                                <p><i>Instructions:</i> click the link above; when the machine has been loaded, click the tape head (the cell with a large black border), type <code>1</code> as many times as you like, press the <code>Enter</code> key and hit the play button.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="uk-accordion-title" href>Binary increment by one</a>
+                            <div class="uk-accordion-content">
+                                <p>A machine that reads from the tape an integer in binary notation and writes it back incremented by one.</p>
+                                <p><a href="?fetch=https%3A%2F%2Fraw.githubusercontent.com%2Ffbbdev%2Fturing%2Fmain%2Fexamples%2FbinaryIncr.txt">Load in the simulator</a></p>
+                                <p><i>Instructions:</i> click the link above; when the machine has been loaded, click the tape head (the cell with a large black border), type a sequence of <code>1</code>s and <code>0</code>s, press the <code>Enter</code> key and hit the play button.</p>
+                                <p>After the machine halts, if you hit the stop button, then the play button again it will keep incrementing the number more and more.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <a class="uk-accordion-title" href>Binary addition</a>
+                            <div class="uk-accordion-content">
+                                <p>A machine that reads from the tape two integers in binary notation, separated by a blank, and writes back their sum.</p>
+                                <p><a href="?fetch=https%3A%2F%2Fraw.githubusercontent.com%2Ffbbdev%2Fturing%2Fmain%2Fexamples%2FbinaryAdd.txt">Load in the simulator</a></p>
+                                <p><i>Instructions:</i> click the link above; when the machine has been loaded, click the tape head (the cell with a large black border), type a sequence of <code>1</code>s and <code>0</code>s, press <code>Space</code>, then type again a sequence of <code>1</code>s and <code>0</code>s, press the <code>Enter</code> key and hit the play button.</p>
+                            </div>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>
